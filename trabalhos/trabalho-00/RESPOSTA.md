@@ -1,19 +1,18 @@
-## ![Alt text](http://i.imgur.com/crkUeM2.jpg) Antonio C. Schönmann Alves
+## ![Alt text](http://i.imgur.com/crkUeM2.jpg) Antonio C. SchÃ¶nmann Alves
 -------------------------------------------------------------------------
+### FormaÃ§Ã£o
+##### ColÃ©gio Pedro II - Unidade Engenho Novo II
+##### UERJ - CiÃªncia da ComputaÃ§Ã£o - (2014.1 - 2017.2)
 
-  ### Formação
-  * ##### Colégio Pedro II - Unidade Engenho Novo II
-  * ##### UERJ - Ciência da Computação - (2014.1 - 2017.2)
-  
-  ### Objetivos no curso
-  * ##### Desenvolvimento de aplicações
-  * ##### Obter bom desempenho nas competições em programação
+### Objetivos no curso
+##### Desenvolvimento de aplicaÃ§Ãµes
+##### Obter bom desempenho nas competiÃ§Ãµes em programaÃ§Ã£o
 
-  ### Hobbies
-  * ##### Tocar algum instrumento musical
-  * ##### Jogos eletrônicos
-  * ##### Programação
+### Hobbies
+##### Tocar algum instrumento musical
+##### Jogos eletrÃ´nicos
+##### ProgramaÃ§Ã£o
 
-  ### Idiomas
-  * ##### Inglês (fluente)
-  * ##### Português (nativo)
+### Idiomas
+##### InglÃªs (fluente)
+##### PortuguÃªs (nativo)

@@ -1,7 +1,7 @@
 ## ![ruby](http://budiirawan.com/wp-content/uploads/2015/04/ruby-logo.png) Ruby - Linguagem de Programação
 ___________________________________________________
 ### Introdução:
-* Criada em 1995 por Yukihiro "Matz" Matsumoto para ser utilizada como linguagem de script.  M
+* Criada em 1995 por Yukihiro "Matz" Matsumoto para ser utilizada como linguagem de script.
 * Mais poderosa que Perl, mais orientada a objetos do que python. 
 * Ja é a décima linguagem de programacao mais popular do mundo. 
 * A linguagem possui inúmeros repositórios de bibliotecas em sites como Ruby Forge e Ruby Application Archive. Para a instalação de bibliotecas, existe a utilidade Ruby Gems, que facilita o processo. 
@@ -59,7 +59,7 @@ ___________________________________________________
     	
     	Saída: "true"
 
-* ##### Em ruby, '0' retorna true:
+* ##### Em Ruby, '0' retorna true:
 &nbsp;
 
     	if 0:

@@ -32,7 +32,7 @@ ___________________________________________________
 &nbsp; 
 
         ano = 1987
-        puts  case year
+        puts  case ano
                 when 1970..1979: "Anos 70"
                 when 1980..1989: "Anos 80"
                 when 1990..1999: "Anos 90"

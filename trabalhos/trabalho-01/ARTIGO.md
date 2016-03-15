@@ -65,3 +65,10 @@ ___________________________________________________
 
         require 'fileutils'
         FileUtils.rm_r 'algum diretório'
+
+### Bibliografia:
+
+* Site da linguagem: https://www.ruby-lang.org/pt/
+* Wikipedia: https://pt.wikipedia.org/wiki/Ruby_(linguagem_de_programa%C3%A7%C3%A3o)
+* Beggining Ruby: https://books.google.com.br/books?id=VCQGjDhhbn8C&printsec=frontcover&hl=pt-BR&source=gbs_ge_summary_r&cad=0#v=onepage&q&f=false
+* Ruby Inside: http://www.rubyinside.com/21-ruby-tricks-902.html

@@ -7,7 +7,9 @@ function draw(o)
         o.y, 
         o.r,
         o.sx,
-        o.sy)
+        o.sy,
+        o.w/2,
+        o.h/2)
 end
 
 renderer.draw = draw

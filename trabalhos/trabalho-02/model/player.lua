@@ -3,6 +3,8 @@ local constants = require("../util/constants")
 
 -- Player Class -- 
 
+local ENV_VAR = {}
+
 Player = {
     x = 0, 
     y = 0,
@@ -38,6 +40,12 @@ function Player:new(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     self.image = image or nil
     self.sx = sx or constants.PLAYER_SCALE
     self.sy = sy or constants.PLAYER_SCALE
+
+    ENV_VAR.BOUNDS_LEFT = self.w * math.abs(self.sx)/2
+    ENV_VAR.BOUNDS_RIGHT = constants.VIEWPORT_WIDTH - self.w * math.abs(self.sx)/2
+    ENV_VAR.BOUNDS_TOP = self.h*math.abs(self.sy)/2
+    ENV_VAR.BOUNDS_BOT = constants.GROUND_Y
+
     return o
 end
 
@@ -49,35 +57,51 @@ function Player:applyFriction(deltaTime)
     end
 end
 
+function Player:updatePositionX(deltaTime)
+    self.x = self.x +  self.dx * deltaTime
+    self.x = util.clamp(self.x, ENV_VAR.BOUNDS_LEFT, ENV_VAR.BOUNDS_RIGHT)
+end
+
+function Player:updatePositionY(deltaTime)
+    self.y = self.y +  self.dy * deltaTime
+    self.y = util.clamp(self.y, ENV_VAR.BOUNDS_TOP, ENV_VAR.BOUNDS_BOT)
+end
+
 function Player:updateMotionX(deltaTime)
+    if self.x == ENV_VAR.BOUNDS_LEFT or self.x == ENV_VAR.BOUNDS_RIGHT then
+        self.dx = - self.dx
+        self.ddx = - self.ddx
+    end
+
     self.dx = self.dx + self.ddx * deltaTime
     self.dx = util.clamp(self.dx, -self.maxdx, self.maxdx)
-    self.x = self.x +  self.dx*deltaTime
 end
 
 function Player:updateMotionY(deltaTime)
     self.dy = self.dy + self.ddy * deltaTime
     self.dy = self.dy + constants.GRAVITY_ACCELERATION * deltaTime
     self.dy = util.clamp(self.dy, -self.maxdy, self.maxdy)
+end
 
-    self.y = self.y +  self.dy * deltaTime
-    
-    self.y = util.clamp(self.y, 0, constants.GROUND_Y)
+function Player:updateOrientation(deltaTime)
+    if self.ddx > 0 then -- player is facing right.
+        self.sx = math.abs(self.sx)
+    elseif self.ddx < 0 then -- player is facing left.
+        self.sx = -math.abs(self.sx)
+    else --, keep player's last orientation.
+    end
 end
 
 function Player:update(deltaTime)
     self:applyFriction(deltaTime)
+
     self:updateMotionX(deltaTime)
     self:updateMotionY(deltaTime)
 
-    if self.ddx > 0 then -- player is facing right.
-        self.sx = math.abs(self.sx)
-    elseif self.ddx < 0 then --, player is facing left.
-        self.sx = -math.abs(self.sx)
-    else --, keep player's last orientation.
-    end
+    self:updatePositionX(deltaTime)
+    self:updatePositionY(deltaTime)
 
-    -- print("ddx: " .. self.ddx .. " dx: " .. self.dx)
+    self:updateOrientation(deltaTime)
 end
 
 function Player:isGrounded()
@@ -94,7 +118,6 @@ function Player:handleInput(deltaTime)
     end
 
     if love.keyboard.isDown("space") and self:isGrounded() then
-        print("JUMP!")
-        self.dy = -375
+        self.dy = constants.PLAYER_JUMP_VELOCITY
     end
 end

@@ -6,10 +6,11 @@ constants.GAME_TITLE = "EDL - Trabalho 02"
 
 constants.GRAVITY_ACCELERATION = 300
 
-constants.GROUND_Y = constants.VIEWPORT_HEIGHT/2.0
+constants.GROUND_Y = 2*constants.VIEWPORT_HEIGHT/3.0
 
 constants.PLAYER_START_X = constants.VIEWPORT_WIDTH/2.0
 constants.PLAYER_START_Y = constants.GROUND_Y
+constants.PLAYER_JUMP_VELOCITY = -375
 constants.PLAYER_WIDTH = 32
 constants.PLAYER_HEIGHT = 32
 constants.PLAYER_FRICTION_X = 20

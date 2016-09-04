@@ -13,12 +13,13 @@ Player = {
     ddx = 0,
     ddy = 0,
     maxdx = 0,
+    maxdy = 0,
     image = nil, 
     sx = 0, 
     sy = 0
 }
 
-function Player:new(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,sx,sy)
+function Player:new(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     o = o or {}
     setmetatable(o,self)
     self.__index = self
@@ -33,6 +34,7 @@ function Player:new(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,sx,sy)
     self.ddx = ddx or 0
     self.ddy = ddy or 0
     self.maxdx = maxdx or constants.PLAYER_MAX_DX
+    self.maxdy = maxdy or constants.PLAYER_MAX_DY
     self.image = image or nil
     self.sx = sx or constants.PLAYER_SCALE
     self.sy = sy or constants.PLAYER_SCALE
@@ -47,15 +49,26 @@ function Player:applyFriction(deltaTime)
     end
 end
 
-function Player:updateMotion(deltaTime)
+function Player:updateMotionX(deltaTime)
     self.dx = self.dx + self.ddx * deltaTime
-    self.dx = util.clamp(self.dx, - self.maxdx, self.maxdx)
+    self.dx = util.clamp(self.dx, -self.maxdx, self.maxdx)
     self.x = self.x +  self.dx*deltaTime
+end
+
+function Player:updateMotionY(deltaTime)
+    self.dy = self.dy + self.ddy * deltaTime
+    self.dy = self.dy + constants.GRAVITY_ACCELERATION * deltaTime
+    self.dy = util.clamp(self.dy, -self.maxdy, self.maxdy)
+
+    self.y = self.y +  self.dy * deltaTime
+    
+    self.y = util.clamp(self.y, 0, constants.GROUND_Y)
 end
 
 function Player:update(deltaTime)
     self:applyFriction(deltaTime)
-    self:updateMotion(deltaTime)
+    self:updateMotionX(deltaTime)
+    self:updateMotionY(deltaTime)
 
     if self.ddx > 0 then -- player is facing right.
         self.sx = math.abs(self.sx)
@@ -67,6 +80,10 @@ function Player:update(deltaTime)
     -- print("ddx: " .. self.ddx .. " dx: " .. self.dx)
 end
 
+function Player:isGrounded()
+    return self.y == constants.GROUND_Y
+end
+
 function Player:handleInput(deltaTime)
     if love.keyboard.isDown("left") then
         playerObject.ddx = -600
@@ -74,5 +91,10 @@ function Player:handleInput(deltaTime)
         playerObject.ddx = 600
     else 
         playerObject.ddx = 0
+    end
+
+    if love.keyboard.isDown("space") and self:isGrounded() then
+        print("JUMP!")
+        self.dy = -375
     end
 end

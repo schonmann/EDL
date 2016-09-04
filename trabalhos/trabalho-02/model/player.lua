@@ -18,12 +18,14 @@ Player = {
     sy = 0
 }
 
-function Player:new(o,image,x,y,fx,fy,dx,dy,ddx,ddy,maxdx,sx,sy)
+function Player:new(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,sx,sy)
     o = o or {}
     setmetatable(o,self)
     self.__index = self
     self.x = x or constants.PLAYER_START_X
     self.y = y or constants.PLAYER_START_Y
+    self.w = w or constants.PLAYER_WIDTH
+    self.h = h or constants.PLAYER_HEIGHT
     self.fx = fx or constants.PLAYER_FRICTION_X
     self.fy = fy or constants.PLAYER_FRICTION_Y
     self.dx = dx or 0
@@ -55,5 +57,22 @@ function Player:update(deltaTime)
     self:applyFriction(deltaTime)
     self:updateMotion(deltaTime)
 
-    print("ddx: " .. self.ddx .. " dx: " .. self.dx)
+    if self.ddx > 0 then -- player is facing right.
+        self.sx = math.abs(self.sx)
+    elseif self.ddx < 0 then --, player is facing left.
+        self.sx = -math.abs(self.sx)
+    else --, keep player's last orientation.
+    end
+
+    -- print("ddx: " .. self.ddx .. " dx: " .. self.dx)
+end
+
+function Player:handleInput(deltaTime)
+    if love.keyboard.isDown("left") then
+        playerObject.ddx = -600
+    elseif love.keyboard.isDown("right") then
+        playerObject.ddx = 600
+    else 
+        playerObject.ddx = 0
+    end
 end

@@ -12,15 +12,8 @@ function love.load()
 end
 
 function love.update(dt)
+    playerObject:handleInput(dt)
     playerObject:update(dt)
-
-    if love.keyboard.isDown("left") then
-        playerObject.ddx = -600
-    elseif love.keyboard.isDown("right") then
-        playerObject.ddx = 600
-    else 
-        playerObject.ddx = 0
-    end
 end
 
 function love.draw()

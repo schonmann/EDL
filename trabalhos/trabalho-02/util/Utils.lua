@@ -1,4 +1,4 @@
-local util = {}
+local Utils = {}
 
 function clamp(x,min,max)
     if x > max then
@@ -18,8 +18,8 @@ function min(a,b)
     return a < b and a or b
 end
 
-util.clamp = clamp
-util.max = max
-util.min = min
+Utils.clamp = clamp
+Utils.max = max
+Utils.min = min
 
-return util
+return Utils

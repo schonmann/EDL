@@ -1,21 +1,20 @@
-local player = require("model.player")
-local assets = require("util.assets")
-local constants = require("util.constants")
-local renderer = require("renderer.renderer")
+local Player = require("model.Player")
+local Constants = require("util.Constants")
+local Renderer = require("renderer.Renderer")
 
 function love.load()
-    love.window.setMode(constants.VIEWPORT_WIDTH, constants.VIEWPORT_HEIGHT)
-    love.window.setTitle(constants.GAME_TITLE)
+    love.window.setMode(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT)
+    love.window.setTitle(Constants.GAME_TITLE)
     love.graphics.setDefaultFilter('nearest')
 
-    playerObject = Player:new(nil, love.graphics.newImage(assets.PATH_IMG_PLAYER))
+    playerObject = Player()
 end
 
 function love.update(dt)
-    playerObject:handleInput(dt)
-    playerObject:update(dt)
+    playerObject.handleInput(dt)
+    playerObject.update(dt)
 end
 
 function love.draw()
-    renderer.draw(playerObject)
+    Renderer.draw(playerObject)
 end

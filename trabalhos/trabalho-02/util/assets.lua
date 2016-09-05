@@ -1,6 +1,7 @@
-local assets = {}
+local Assets = {}
 
-assets.DIR = "assets/"
-assets.PATH_IMG_PLAYER = assets.DIR .. "char_v2.png"
+Assets.DIR = "assets/"
+Assets.PATH_IMG_PLAYER = Assets.DIR .. "char_v2.png"
+Assets.PATH_IMG_BACKGROUND = Assets.DIR .. "bg.png"
 
-return assets
+return Assets

@@ -1,6 +1,6 @@
-local Player = require("model.Player")
-local Constants = require("util.Constants")
-local Renderer = require("renderer.Renderer")
+local Player = require("model.player")
+local Constants = require("util.constants")
+local Renderer = require("renderer.renderer")
 
 function love.load()
     love.window.setMode(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT)

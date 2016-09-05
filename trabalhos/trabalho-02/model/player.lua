@@ -1,7 +1,7 @@
-local Utils = require("../util/Utils")
-local Constants = require("../util/Constants")
-local GameObject = require("../model/GameObject")
-local Assets = require("util/Assets")
+local Utils = require("../util/utils")
+local Constants = require("../util/constants")
+local GameObject = require("../model/gameobject")
+local Assets = require("util/assets")
 
 -- Player Class -- 
 

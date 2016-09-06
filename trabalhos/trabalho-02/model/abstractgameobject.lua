@@ -1,4 +1,4 @@
-local function GameObject(o,image,x,y,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
+local function AbstractGameObject(o,image,x,y,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     local self = {}
     
     -- Fields.
@@ -24,4 +24,4 @@ local function GameObject(o,image,x,y,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     return self
 end
 
-return GameObject
+return AbstractGameObject

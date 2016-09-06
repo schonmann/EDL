@@ -21,7 +21,7 @@ Constants.PLAYER_MAX_DY = 500
 Constants.PLAYER_SCALE = 2
 Constants.PLAYER_MAX_JUMP_PWR = 1.8
 Constants.PLAYER_MIN_JUMP_PWR = 0.6
-Constants.PLAYER_CAN_FLY = true
+Constants.PLAYER_CAN_FLY = false
 
 Constants.BACKGROUND_WIDTH = 400
 Constants.BACKGROUND_HEIGHT = 300

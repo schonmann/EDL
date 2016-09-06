@@ -1,23 +1,20 @@
-local Player = require("model.player")
-local Background = require("model.background")
 local Constants = require("util.constants")
 local Renderer = require("renderer.renderer")
+local ControllerManager = require("controller.controllermanager")
 
 function love.load()
     love.window.setMode(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT)
     love.window.setTitle(Constants.GAME_TITLE)
     love.graphics.setDefaultFilter('nearest')
-    
-    backgroundObject = Background()
-    playerObject = Player()
+
+    manager = ControllerManager();
 end
 
 function love.update(dt)
-    playerObject.handleInput(dt)
-    playerObject.update(dt)
+    manager.getCurrent().handleInput(dt)
+    manager.getCurrent().update(dt)
 end
 
 function love.draw()
-    Renderer.draw(backgroundObject)
-    Renderer.draw(playerObject)
+    Renderer.draw(manager.getCurrent())
 end

@@ -1,24 +1,28 @@
 local Utils = require("../util/utils")
 local Constants = require("../util/constants")
-local GameObject = require("../model/gameobject")
+local AbstractGameObject = require("../model/abstractgameobject")
 local Assets = require("util/assets")
 
 -- Player Class -- 
 
 local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
-    local self = GameObject(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
+    local self = AbstractGameObject(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
 
-    self.image = love.graphics.newImage(Assets.PATH_IMG_PLAYER)
-    self.w = Constants.PLAYER_WIDTH
-    self.h = Constants.PLAYER_HEIGHT
-    self.x = Constants.PLAYER_START_X
-    self.y = Constants.PLAYER_START_Y
-    self.fx = Constants.PLAYER_FRICTION_X
-    self.fy = Constants.PLAYER_FRICTION_Y
-    self.maxdx = Constants.PLAYER_MAX_DX
-    self.maxdy = Constants.PLAYER_MAX_DY
-    self.sx = Constants.PLAYER_SCALE
-    self.sy = Constants.PLAYER_SCALE
+    function self.init()
+        self.image = love.graphics.newImage(Assets.PATH_IMG_PLAYER)
+        self.w = Constants.PLAYER_WIDTH
+        self.h = Constants.PLAYER_HEIGHT
+        self.x = Constants.PLAYER_START_X
+        self.y = Constants.PLAYER_START_Y
+        self.fx = Constants.PLAYER_FRICTION_X
+        self.fy = Constants.PLAYER_FRICTION_Y
+        self.maxdx = Constants.PLAYER_MAX_DX
+        self.maxdy = Constants.PLAYER_MAX_DY
+        self.sx = Constants.PLAYER_SCALE
+        self.sy = Constants.PLAYER_SCALE
+    end
+
+    self.init()
 
     local BOUNDS_LEFT = self.sx*self.w/2.0
     local BOUNDS_RIGHT = Constants.VIEWPORT_WIDTH - self.sx*self.w/2.0

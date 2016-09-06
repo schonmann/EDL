@@ -5,7 +5,7 @@ local Assets = require("util/assets")
 
 -- Player Class -- 
 
-local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,maxdy,sx,sy)
+local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     local self = GameObject(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
 
     self.image = love.graphics.newImage(Assets.PATH_IMG_PLAYER)
@@ -19,7 +19,6 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,maxdy,sx,s
     self.maxdy = Constants.PLAYER_MAX_DY
     self.sx = Constants.PLAYER_SCALE
     self.sy = Constants.PLAYER_SCALE
-
 
     local BOUNDS_LEFT = self.sx*self.w/2.0
     local BOUNDS_RIGHT = Constants.VIEWPORT_WIDTH - self.sx*self.w/2.0

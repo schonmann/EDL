@@ -23,7 +23,7 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,maxdy,sx,s
 
     local BOUNDS_LEFT = self.sx*self.w/2.0
     local BOUNDS_RIGHT = Constants.VIEWPORT_WIDTH - self.sx*self.w/2.0
-    local BOUNDS_BOT = Constants.GROUND_Y
+    local BOUNDS_BOT = Constants.ENVIRONMENT_GROUND_Y
     local BOUNDS_TOP = self.sx*self.h/2.0
 
     function self.applyFriction(deltaTime)
@@ -57,7 +57,7 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,maxdy,sx,s
 
     function self.updateMotionY(deltaTime)
         self.dy = self.dy + self.ddy * deltaTime
-        self.dy = self.dy + Constants.GRAVITY_ACCELERATION * deltaTime
+        self.dy = self.dy + Constants.ENVIRONMENT_GRAVITY_ACCELERATION * deltaTime
         self.dy = Utils.clamp(self.dy, -self.maxdy, self.maxdy)
     end
 
@@ -83,7 +83,7 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,maxdy,sx,s
     end
 
     function self.isGrounded()
-        return self.y == Constants.GROUND_Y
+        return self.y == Constants.ENVIRONMENT_GROUND_Y
     end
 
     function self.handleInput(deltaTime)

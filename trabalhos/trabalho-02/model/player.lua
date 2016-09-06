@@ -34,7 +34,6 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     end
 
     function self.updatePositionX(deltaTime)
-        print(self.x)
         self.x = self.x + self.dx * deltaTime
         self.x = Utils.clamp(self.x, BOUNDS_LEFT, BOUNDS_RIGHT)
     end
@@ -46,8 +45,8 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
 
     function self.updateMotionX(deltaTime)
         if self.x == BOUNDS_LEFT or self.x == BOUNDS_RIGHT then
-            self.dx = - self.dx
-            self.ddx = - self.ddx
+            self.dx = - self.dx/2
+            self.ddx = self.ddx/2
         end
 
         self.dx = self.dx + self.ddx * deltaTime
@@ -85,13 +84,47 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         return self.y == Constants.ENVIRONMENT_GROUND_Y
     end
 
-    function self.handleInput(deltaTime)
-        if love.keyboard.isDown("left") then playerObject.ddx = -600
-        elseif love.keyboard.isDown("right") then playerObject.ddx = 600
-        else playerObject.ddx = 0 end
+    function self.turnRight()
+        self.ddx = 600
+    end
 
-        if love.keyboard.isDown("space") and self.isGrounded() then
-            self.dy = Constants.PLAYER_JUMP_VELOCITY
+    function self.turnLeft()
+        self.ddx = -600
+    end
+
+    function self.stop()
+        self.ddx = 0
+    end
+
+    function self.jump(timePressed)
+        if not Constants.PLAYER_CAN_FLY and not self.isGrounded() then return end
+
+        local power = Utils.clamp(timePressed/0.15, Constants.PLAYER_MIN_JUMP_PWR, Constants.PLAYER_MAX_JUMP_PWR)
+
+        self.dy = Constants.PLAYER_JUMP_VELOCITY * power
+    end
+
+    local spaceDownDt = 0;
+    local spaceUpDt = 0;
+
+    function self.handleInput(deltaTime)
+
+        if love.keyboard.isDown("left") then self.turnLeft()
+        elseif love.keyboard.isDown("right") then self.turnRight()
+        else self.stop()
+        end
+
+        function love.keypressed(key)
+            if key == "space" then
+                spaceDownDt = love.timer.getTime()
+            end
+        end
+
+        function love.keyreleased(key)
+            if key == "space" then
+                spaceUpDt = love.timer.getTime()
+                self.jump(spaceUpDt - spaceDownDt)
+            end
         end
     end
 

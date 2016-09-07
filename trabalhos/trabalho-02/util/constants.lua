@@ -25,8 +25,8 @@ Constants.PLAYER_CAN_FLY = false
 
 Constants.BACKGROUND_WIDTH = 400
 Constants.BACKGROUND_HEIGHT = 300
-Constants.BACKGROUND_DX = {3.5, 6.0}
+Constants.BACKGROUND_DX = {3.5, 6.0, 10.0}
 Constants.BACKGROUND_SCALE = 2
-Constants.BACKGROUND_LAYER_NUMBER = 2
+Constants.BACKGROUND_LAYER_NUMBER = 3
 
 return Constants

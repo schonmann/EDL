@@ -21,6 +21,26 @@ local function AbstractGameObject(o,image,x,y,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx
 
     -- Methods.
 
+    function self.draw()
+        love.graphics.draw(
+            self.image, 
+            self.x, 
+            self.y, 
+            self.r,
+            self.sx,
+            self.sy,
+            self.w/2,
+            self.h/2)
+    end
+
+    function self.setImage(image)
+        self.image = image
+    end
+
+    function self.setDx(dx)
+        self.dx = dx
+    end
+
     return self
 end
 

@@ -1,59 +1,40 @@
 local Utils = require("../util/utils")
 local Constants = require("../util/constants")
 local AbstractGameObject = require("../model/abstractgameobject")
+local BackgroundLayer = require("../model/backgroundlayer")
 local Assets = require("util/assets")
 
-local function Background(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,maxdy,sx,sy)
-    local self = AbstractGameObject(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
+local function Background()
+
+    local self = {}
+    self.layers = {}
+
+    function self.initLayers()
+        for i=1,Constants.BACKGROUND_LAYER_NUMBER do
+            local img_pth = Assets.PATH_IMG_BACKGROUND[i]
+            local img = love.graphics.newImage(img_pth)
+            local bg = BackgroundLayer(nil, img)
+            bg.setDx(Constants.BACKGROUND_DX[i])
+            table.insert(self.layers, bg)
+        end
+    end
 
     function self.init()
-        self.image = love.graphics.newImage(Assets.PATH_IMG_BACKGROUND)
-        
-        -- [[ Infinite scrolling background! =) ]]
-        
-        self.scrlX = 0
-        self.image:setWrap("repeat", "clamp")
-        self.quad = love.graphics.newQuad(0,0,Constants.BACKGROUND_WIDTH, Constants.BACKGROUND_HEIGHT,
-            self.image:getWidth(), self.image:getHeight())
-        
-        self.x = Constants.BACKGROUND_WIDTH
-        self.y = Constants.BACKGROUND_HEIGHT
-        self.w = Constants.BACKGROUND_WIDTH
-        self.h = Constants.BACKGROUND_HEIGHT
-        self.sx = Constants.BACKGROUND_SCALE
-        self.sy = Constants.BACKGROUND_SCALE
-        self.dx = Constants.BACKGROUND_DX
-
+        self.initLayers()
     end
-    
+
     self.init()
-
-    function self.updatePositionX(deltaTime)
-        self.scrlX = self.scrlX + self.dx * deltaTime
-    end
-
-    function self.updatePositionY(deltaTime)
-        self.y = self.y +  self.dy * deltaTime
-    end
-
-    function self.updateMotionX(deltaTime)
-        self.dx = self.dx + self.ddx * deltaTime
-        self.dx = Utils.clamp(self.dx, -self.maxdx, self.maxdx)
-    end
-
-    function self.updateMotionY(deltaTime)
-        self.dy = self.dy + self.ddy * deltaTime
-        self.dy = Utils.clamp(self.dy, -self.maxdy, self.maxdy)
+    
+    function self.draw()
+        for i,o in pairs(self.layers) do
+            o.draw()
+        end
     end
 
     function self.update(deltaTime)
-        self.updateMotionX(deltaTime)
-        self.updateMotionY(deltaTime)
-
-        self.updatePositionX(deltaTime)
-        self.updatePositionY(deltaTime)
-
-        self.quad:setViewport(self.dx * self.scrlX, 0, Constants.BACKGROUND_WIDTH, self.image:getHeight())
+        for i,o in pairs(self.layers) do
+            o.update(deltaTime)
+        end
     end
 
     function self.handleInput(deltaTime)

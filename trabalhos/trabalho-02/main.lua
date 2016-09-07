@@ -1,5 +1,4 @@
 local Constants = require("util.constants")
-local Renderer = require("renderer.renderer")
 local ControllerManager = require("controller.controllermanager")
 
 function love.load()
@@ -16,5 +15,30 @@ function love.update(dt)
 end
 
 function love.draw()
-    Renderer.draw(manager.getCurrent())
+    manager.getCurrent().draw()
 end
+
+
+
+--[[if o.quad ~= nil then
+            love.graphics.draw(
+                o.image,
+                o.quad,
+                o.x,
+                o.y,
+                o.r,
+                o.sx,
+                o.sy,
+                o.w/2,
+                o.h/2)
+        else
+            love.graphics.draw(
+                o.image, 
+                o.x, 
+                o.y, 
+                o.r,
+                o.sx,
+                o.sy,
+                o.w/2,
+                o.h/2)
+        end ]]

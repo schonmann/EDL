@@ -89,11 +89,11 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     end
 
     function self.turnRight()
-        self.ddx = 600
+        self.ddx = 1000
     end
 
     function self.turnLeft()
-        self.ddx = -600
+        self.ddx = -1000
     end
 
     function self.stop()
@@ -103,7 +103,7 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     function self.jump(timePressed)
         if not Constants.PLAYER_CAN_FLY and not self.isGrounded() then return end
 
-        local power = Utils.clamp(timePressed/0.15, Constants.PLAYER_MIN_JUMP_PWR, Constants.PLAYER_MAX_JUMP_PWR)
+        local power = Utils.clamp(timePressed/0.3, Constants.PLAYER_MIN_JUMP_PWR, Constants.PLAYER_MAX_JUMP_PWR)
 
         self.dy = Constants.PLAYER_JUMP_VELOCITY * power
     end

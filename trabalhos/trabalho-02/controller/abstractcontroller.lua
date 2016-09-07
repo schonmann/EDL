@@ -20,6 +20,12 @@ local function AbstractController(manager)
         end
     end
 
+    function self.draw()
+        for i,o in pairs(self.objects) do
+            o.draw()
+        end
+    end
+
     function self.init()
         for i,o in pairs(self.objects) do
             o.init()

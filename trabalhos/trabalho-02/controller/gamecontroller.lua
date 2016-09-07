@@ -1,5 +1,6 @@
 local AbstractController = require('../controller/abstractcontroller')
-local Constants = require('../util/Constants')
+local Assets = require('../util/assets')
+local Constants = require('../util/constants')
 local Player = require("model.player")
 local Background = require("model.background")
 
@@ -10,7 +11,7 @@ local function GameController(manager)
 
     local background = Background()
     local player = Player()
-
+    
     table.insert(self.objects, background)
     table.insert(self.objects, player)
 

@@ -1,6 +1,6 @@
 local Constants = require("util.constants")
 local Assets = require("util.assets")
-local ControllerManager = require("controller.controllermanager")
+local ControllerManager = require("util.controllermanager")
 
 function love.load()
     love.window.setMode(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT)
@@ -10,6 +10,7 @@ function love.load()
     donnalee:setVolume(0.6)
     donnalee:setLooping(true)
     donnalee:play()
+
     manager = ControllerManager();
 end
 

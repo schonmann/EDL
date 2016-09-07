@@ -100,12 +100,19 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         self.ddx = 0
     end
 
+    function manageJumpSound(power)
+        if power > (Constants.PLAYER_MIN_JUMP_PWR + Constants.PLAYER_MAX_JUMP_PWR)/3 then
+            soundManager.triggerJumpHigh()
+        else
+            soundManager.triggerJumpLow()
+        end
+    end
+
     function self.jump(timePressed)
         if not Constants.PLAYER_CAN_FLY and not self.isGrounded() then return end
-
         local power = Utils.clamp(timePressed/0.3, Constants.PLAYER_MIN_JUMP_PWR, Constants.PLAYER_MAX_JUMP_PWR)
-
         self.dy = Constants.PLAYER_JUMP_VELOCITY * power
+        manageJumpSound(power)
     end
 
     local spaceDownDt = 0;

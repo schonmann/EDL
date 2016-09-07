@@ -1,16 +1,17 @@
 local Constants = require("util.constants")
 local Assets = require("util.assets")
-local ControllerManager = require("controller.controllermanager")
+local SoundManager = require("util.soundmanager")
+local ControllerManager = require("util.controllermanager")
 
 function love.load()
     love.window.setMode(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT)
     love.window.setTitle(Constants.GAME_TITLE)
     love.graphics.setDefaultFilter('nearest')
-    local donnalee = love.audio.newSource(Assets.PATH_MP3_DONNALEE)
-    donnalee:setVolume(0.6)
-    donnalee:setLooping(true)
-    donnalee:play()
-    manager = ControllerManager();
+
+    soundManager = SoundManager()
+    manager = ControllerManager()
+
+    soundManager.playMainMusic()
 end
 
 function love.update(dt)

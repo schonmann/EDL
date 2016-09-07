@@ -1,4 +1,4 @@
-local Asssets = require("../util/assets")
+local Assets = require("../util/assets")
 
 local function SoundManager()
     local self = {}
@@ -25,7 +25,7 @@ local function SoundManager()
         SFXJumpsLow[love.math.random(1,2)]:play()
     end
 
-    function self.triggerJumpLow()
+    function self.triggerJumpHigh()
         SFXJumpsHigh[love.math.random(1,2)]:play()
     end 
 

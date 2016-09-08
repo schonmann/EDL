@@ -1,5 +1,7 @@
 local Constants = {}
 
+Constants.DEBUG = true
+
 Constants.VIEWPORT_WIDTH = 800
 Constants.VIEWPORT_HEIGHT = 600
 Constants.GAME_TITLE = "EDL - Trabalho 02"

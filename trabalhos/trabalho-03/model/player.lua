@@ -28,7 +28,7 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     local BOUNDS_RIGHT = Constants.VIEWPORT_WIDTH - self.sx*self.w/2.0
     local BOUNDS_BOT = Constants.ENVIRONMENT_GROUND_Y
     local BOUNDS_TOP = self.sx*self.h/2.0
-
+    
     function self.applyFriction(deltaTime)
         if self.dx > 0 then
             self.dx = Utils.max(0, self.dx - Constants.PLAYER_FRICTION_X * deltaTime)

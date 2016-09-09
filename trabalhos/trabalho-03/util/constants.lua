@@ -1,6 +1,6 @@
 local Constants = {}
 
-Constants.DEBUG = true
+Constants.DEBUG = false
 
 Constants.VIEWPORT_WIDTH = 800
 Constants.VIEWPORT_HEIGHT = 600

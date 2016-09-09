@@ -64,44 +64,63 @@ local function GameController(manager)
     self.init()
     
     function self.update(dt)
-        for i,o in pairs(self.objects) do
-            o.update(dt)
-        end
-
-        if self.checkForCollisions() then
-            if score > hiscore then
-                hiscore = score
+        if player.isPlaying() then
+            for i,o in pairs(self.objects) do
+                o.update(dt)
             end
-            manager.toGame()
+
+            if self.checkForCollisions() then -- game over!
+                if score > hiscore then
+                    hiscore = score
+                end
+
+                self.init()
+            end
         end
     end
 
-    function self.draw()
-        for i,o in pairs(self.objects) do
-            o.draw()
-        end
-        
+    function drawHUD()
         local scoreTxt = score
         local hiscoreTxt = "HIGHSCORE: " .. hiscore
 
         local scoreTxtWidth = love.graphics.getFont():getWidth(scoreTxt)
         local hiscoreTxtWidth = love.graphics.getFont():getWidth(hiscoreTxt)
 
-        love.graphics.print(
-            scoreTxt, 
-            Constants.VIEWPORT_WIDTH/2 - Constants.TEXT_SCALE*1.5*scoreTxtWidth/2, 
-            100, 
-            0, 
-            Constants.TEXT_SCALE*1.5, 
-            Constants.TEXT_SCALE*1.5)
+        love.graphics.print(scoreTxt, 
+        Constants.VIEWPORT_WIDTH/2 - Constants.TEXT_SCALE*1.5*scoreTxtWidth/2, 
+        100, 
+        0, 
+        Constants.TEXT_SCALE*1.5, 
+        Constants.TEXT_SCALE*1.5)
 
-        love.graphics.print(
-            hiscoreTxt, 
-            20,
-            20, 
-            0, 
-            Constants.TEXT_SCALE*1, 
-            Constants.TEXT_SCALE*1)
+        love.graphics.print(hiscoreTxt, 20, 20, 0, Constants.TEXT_SCALE*1, Constants.TEXT_SCALE*1)
+    end
+
+    function drawIntro()
+        local introText = "PRESS 'SPACE' TO JUMP!"
+        local introTextWidth = love.graphics.getFont():getWidth(introText)
+
+        -- Sinusoidal movement to intro text.
+
+        local fsin = 1 + math.abs(math.sin(love.timer.getTime() * 3))/3
+
+        love.graphics.print(introText, 
+        Constants.VIEWPORT_WIDTH/2 - Constants.TEXT_SCALE*introTextWidth*(fsin)/2,
+        Constants.VIEWPORT_HEIGHT/2, 0, 
+        Constants.TEXT_SCALE*(fsin), 
+        Constants.TEXT_SCALE*(fsin))
+    end
+
+    function self.draw()
+        for i,o in pairs(self.objects) do
+            o.draw()
+        end
+
+        if not player.isPlaying() then
+            drawIntro()
+        else
+            drawHUD()
+        end
     end
 
     return self

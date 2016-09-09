@@ -4,12 +4,25 @@ local Background = require("model.background")
 
 local function MenuController(manager)
     local self = AbstractController(manager)
-    
-    -- Fields.
 
-    table.insert(self.objects, Background())
+    function self.reset()
+        self.objects = {}
+    end
 
-    -- Methods.
+    function self.init()
+        self.reset()
+        table.insert(self.objects, Background())
+    end
+
+    function self.handleInput(dt)
+        function love.keypressed(key)
+            if key == "space" then
+                self.manager.toGame()
+            end
+        end
+    end
+
+    self.init()
 
     return self
 end

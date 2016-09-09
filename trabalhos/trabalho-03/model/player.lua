@@ -20,6 +20,7 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         self.maxdy = Constants.PLAYER_MAX_DY
         self.sx = Constants.PLAYER_SCALE
         self.sy = Constants.PLAYER_SCALE
+        self.isPlaying = false
     end
 
     self.init()
@@ -115,8 +116,8 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         manageJumpSound(power)
     end
 
-    local spaceDownDt = 0;
-    local spaceUpDt = 0;
+    local spaceDownDt = -1;
+    local spaceUpDt = -1;
 
     function self.handleInput(deltaTime)
 
@@ -128,15 +129,24 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         function love.keypressed(key)
             if key == "space" then
                 spaceDownDt = love.timer.getTime()
+                if not self.playing then
+                    self.playing = true
+                end
             end
         end
 
         function love.keyreleased(key)
             if key == "space" then
                 spaceUpDt = love.timer.getTime()
-                self.jump(spaceUpDt - spaceDownDt)
+                if spaceDownDt ~= -1 then
+                    self.jump(spaceUpDt - spaceDownDt)
+                end
             end
         end
+    end
+
+    function self.isPlaying()
+        return self.playing
     end
 
     return self

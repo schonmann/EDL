@@ -19,10 +19,12 @@ local function ControllerManager()
 
     function self.toMenu()
         self.passControlTo(MENU_CONTROLLER)
+        self.getCurrent().init()
     end
 
     function self.toGame()
         self.passControlTo(GAME_CONTROLLER)
+        self.getCurrent().init()
     end
 
     function self.getCurrent()

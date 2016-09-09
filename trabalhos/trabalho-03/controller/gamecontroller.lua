@@ -4,6 +4,7 @@ local Constants = require('../util/constants')
 local Player = require("model.player")
 local Enemy = require("model.enemy")
 local Background = require("model.background")
+local DrawManager = require("../util/drawmanager")
 
 local function GameController(manager)
     local self = AbstractController(manager)
@@ -13,7 +14,11 @@ local function GameController(manager)
     local score = 0
     local hiscore = 0
 
+    local gameOver = false
+    local gameOverTime = 0
+
     function self.reset()
+        gameOver = false
         self.objects = {}
         player = nil
         enemies = {}
@@ -66,63 +71,24 @@ local function GameController(manager)
     function self.update(dt)
         if not player.isPlaying() then return end
 
+        if gameOver then
+            if love.timer.getTime() - gameOverTime > 2 then
+                self.init()
+            end
+            return
+        end
+
         for i,o in pairs(self.objects) do
             o.update(dt)
         end
 
         if self.checkForCollisions() then -- game over!
+            gameOver = true
+            gameOverTime = love.timer.getTime()
             if score > hiscore then
                 hiscore = score
             end
-
-            self.init()
         end
-    end
-
-    function drawHUD()
-        local scoreTxt = score
-        local hiscoreTxt = Constants.TEXT_HISCORE .. ": " .. hiscore
-
-        local scoreTxtWidth = love.graphics.getFont():getWidth(scoreTxt)
-        local hiscoreTxtWidth = love.graphics.getFont():getWidth(hiscoreTxt)
-
-        love.graphics.print(scoreTxt, 
-        Constants.VIEWPORT_WIDTH/2 - Constants.TEXT_SCALE*1.5*scoreTxtWidth/2, 
-        100, 
-        0, 
-        Constants.TEXT_SCALE*1.5, 
-        Constants.TEXT_SCALE*1.5)
-
-        love.graphics.print(hiscoreTxt, 20, 20, 0, Constants.TEXT_SCALE*1, Constants.TEXT_SCALE*1)
-    end
-
-    function drawIntro()
-        local titleText = Constants.TEXT_TITLE
-        local introText = Constants.TEXT_INTRO
-
-        local titleTextWidth = love.graphics.getFont():getWidth(titleText)
-        local titleTextHeight = love.graphics.getFont():getHeight(titleText)
-        local introTextWidth = love.graphics.getFont():getWidth(introText)
-        local introTextHeight = love.graphics.getFont():getHeight(introText)
-
-        local fsin = 1.0 + math.sin(love.timer.getTime() * 8)/20
-        local fcos = 2 * math.cos(love.timer.getTime() * 10)
-
-        -- Cosinuidal
-
-        love.graphics.print(titleText,
-        Constants.VIEWPORT_WIDTH/2,
-        Constants.VIEWPORT_HEIGHT/4 + fcos, 0, 
-        Constants.TEXT_SCALE_TITLE, 
-        Constants.TEXT_SCALE_TITLE, titleTextWidth/2, titleTextHeight/2)
-
-        -- Sinusoidal movement to intro text.
-
-        love.graphics.print(introText, 
-        Constants.VIEWPORT_WIDTH/2,
-        Constants.VIEWPORT_HEIGHT/2, 0, 
-        Constants.TEXT_SCALE*(fsin), 
-        Constants.TEXT_SCALE*(fsin), introTextWidth/2, introTextHeight/2)
     end
 
     function self.draw()
@@ -130,10 +96,12 @@ local function GameController(manager)
             o.draw()
         end
 
-        if not player.isPlaying() then
-            drawIntro()
+        if gameOver then
+            DrawManager.drawGameOver(score,hiscore)
+        elseif not player.isPlaying() then
+            DrawManager.drawIntro()
         else
-            drawHUD()
+            DrawManager.drawHUD(score,hiscore)
         end
     end
 

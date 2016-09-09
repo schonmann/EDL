@@ -32,6 +32,10 @@ Constants.BACKGROUND_SCALE = 2
 Constants.BACKGROUND_LAYER_NUMBER = 3
 
 Constants.TEXT_SCALE = 2.0
+Constants.TEXT_SCALE_TITLE = 3.0
+Constants.TEXT_TITLE = "FLEA FRENZY!"
 Constants.TEXT_INTRO = "PRESS 'SPACE' TO JUMP!"
+Constants.TEXT_HISCORE = "HIGHSCORE"
+Constants.TEXT_SCORE = "SCORE"
 
 return Constants

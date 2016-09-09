@@ -15,4 +15,6 @@ Assets.PATH_SFX_JUMP_SML2 = Assets.DIR .. "jump_sml_02.wav"
 Assets.PATH_SFX_JUMP_HGH1 = Assets.DIR .. "jump_hgh_01.wav"
 Assets.PATH_SFX_JUMP_HGH2 = Assets.DIR .. "jump_hgh_02.wav"
 
+Assets.PATH_FONT_MAIN = Assets.DIR .. "game-font.png"
+
 return Assets

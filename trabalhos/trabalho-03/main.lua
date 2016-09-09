@@ -7,6 +7,10 @@ function love.load()
     love.window.setMode(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT)
     love.window.setTitle(Constants.GAME_TITLE)
     love.graphics.setDefaultFilter('nearest')
+    love.graphics.setFont(love.graphics.newImageFont(Assets.PATH_FONT_MAIN,
+    " abcdefghijklmnopqrstuvwxyz" ..
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
+    "123456789.,!?-+/():;%&`'*#=[]\""))
 
     soundManager = SoundManager()
     manager = ControllerManager()

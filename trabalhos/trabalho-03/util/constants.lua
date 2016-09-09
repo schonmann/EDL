@@ -31,4 +31,6 @@ Constants.BACKGROUND_DX = {3.5, 6.0, 10.0}
 Constants.BACKGROUND_SCALE = 2
 Constants.BACKGROUND_LAYER_NUMBER = 3
 
+Constants.TEXT_SCALE = 2.0
+
 return Constants

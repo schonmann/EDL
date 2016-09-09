@@ -47,6 +47,7 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         self.x = self.x + self.dx * deltaTime
         if self.x < -self.sx*self.w/2 then
             self.randomize()
+            self.scoreCallback()
         end
     end
 
@@ -84,6 +85,10 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
 
         self.updateOrientation(deltaTime)
         self.jump()
+    end
+
+    function self.setScoreCallback(scoreCallback)
+        self.scoreCallback = scoreCallback
     end
 
     function self.isGrounded()

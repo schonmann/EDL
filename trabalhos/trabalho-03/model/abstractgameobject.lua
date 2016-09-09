@@ -1,4 +1,5 @@
 local Constants = require("../util/constants")
+local Utils = require("../util/utils")
 
 local function AbstractGameObject(o,image,x,y,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     local self = {}
@@ -20,7 +21,7 @@ local function AbstractGameObject(o,image,x,y,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx
     self.image = image or nil
     self.sx = sx or 1
     self.sy = sy or 1
-    self.hostile = false
+    self.hitboxFactor = 1
 
     -- Methods.
 
@@ -34,11 +35,11 @@ local function AbstractGameObject(o,image,x,y,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx
             self.sy,
             self.w/2,
             self.h/2)
-            local r = self.getRect()
 
         if Constants.DEBUG then
+            local c = self.getCircle()
             love.graphics.setColor( 130, 40, 140 )
-            love.graphics.rectangle("line",r.x1,r.y1,r.x2-r.x1,r.y2-r.y1)
+            love.graphics.circle("line", c.x, c.y, c.r)
             love.graphics.setColor( 255, 255, 255)
         end
     end
@@ -51,27 +52,17 @@ local function AbstractGameObject(o,image,x,y,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx
         self.dx = dx
     end
 
-    function self.getRect()
-        return {
-            x1 = self.x - self.sx*self.w/2, 
-            y1 = self.y - self.sy*self.h/2,  
-            x2 = self.x + self.sx*self.w/2, 
-            y2 = self.y + self.sy*self.h/2
-        }
+    function self.getCircle()
+        return {x = self.x, y = self.y, r = math.abs(self.w*self.sx/2) * self.hitboxFactor}
     end
 
     function self.collidesWith(obj)
-        local r1 = self.getRect()
-        local r2 = obj.getRect()
+        local c1 = self.getCircle()
+        local c2 = obj.getCircle()
         
-        if  r1.x2 < r2.x1 or r1.x1 > r2.x2 or
-            r1.y2 < r2.y1 or r1.y1 > r2.y2 then
+        if Utils.distance(c1.x,c1.y,c2.x,c2.y) > c1.r + c2.r then
             return false
         end
-
-        print("Collision!")
-        print("R1!: ",r1.x1,r1.y1,r1.x2,r1.y2)
-        print("F2!: ",r2.x1,r2.y1,r2.x2,r2.y2)
 
         return true
     end

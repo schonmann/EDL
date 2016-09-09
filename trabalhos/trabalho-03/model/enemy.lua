@@ -25,8 +25,10 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         self.x = Constants.VIEWPORT_WIDTH + self.w/2
         self.maxdx = Constants.PLAYER_MAX_DX
         self.maxdy = Constants.PLAYER_MAX_DY
-        self.sx = Constants.PLAYER_SCALE*1.0
-        self.sy = Constants.PLAYER_SCALE*1.0
+        self.sx = Constants.PLAYER_SCALE
+        self.sy = Constants.PLAYER_SCALE
+
+        self.hitboxFactor = 0.7
         
         self.randomize()
     end

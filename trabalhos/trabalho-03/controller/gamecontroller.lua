@@ -31,7 +31,6 @@ local function GameController(manager)
 
     function self.checkForCollisions()
         for k,v in pairs(enemies) do
-            print("Enemy: ", v, v.x, v.y)
             if player.collidesWith(v) then
                 return true
             end
@@ -47,10 +46,7 @@ local function GameController(manager)
         for i,o in pairs(self.objects) do
             o.update(dt)
         end
-
-        print("Player: ", player, player.x, player.y)
         
-
         if self.checkForCollisions() then
             manager.toMenu()
         end

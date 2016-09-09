@@ -2,7 +2,7 @@ local Constants = {}
 
 Constants.VIEWPORT_WIDTH = 800
 Constants.VIEWPORT_HEIGHT = 600
-Constants.GAME_TITLE = "EDL - Trabalho 02"
+Constants.GAME_TITLE = "EDL - Trabalho 03"
 
 Constants.ENVIRONMENT_GRAVITY_ACCELERATION = 1750
 Constants.ENVIRONMENT_GROUND_Y = 3*Constants.VIEWPORT_HEIGHT/4.0

@@ -8,6 +8,9 @@ local Background = require("model.background")
 local function GameController(manager)
     local self = AbstractController(manager)
 
+    local player = {}
+    local enemies = {}
+
     function setupBackground()
         local background = Background()
         table.insert(self.objects, background)
@@ -15,19 +18,43 @@ local function GameController(manager)
 
     function setupEnemies()
         for i = 1,3 do
-            local enemy = Enemy()
+            enemy = Enemy()
             table.insert(self.objects, enemy)
+            table.insert(enemies, enemy)
         end
     end
 
     function setupPlayer()
-        local player = Player()
+        player = Player()
         table.insert(self.objects, player)
     end
 
-    setupBackground()
+    function self.checkForCollisions()
+        for k,v in pairs(enemies) do
+            print("Enemy: ", v, v.x, v.y)
+            if player.collidesWith(v) then
+                return true
+            end
+        end
+        return false
+    end
+
+    setupBackground() 
     setupEnemies()
     setupPlayer()
+
+    function self.update(dt)
+        for i,o in pairs(self.objects) do
+            o.update(dt)
+        end
+
+        print("Player: ", player, player.x, player.y)
+        
+
+        if self.checkForCollisions() then
+            manager.toMenu()
+        end
+    end
 
     return self
 end

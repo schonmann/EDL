@@ -41,6 +41,10 @@ local function Background()
         -- Empty implementation.
     end
 
+    function self.isHostile()
+        return false
+    end
+
     return self
 end
 

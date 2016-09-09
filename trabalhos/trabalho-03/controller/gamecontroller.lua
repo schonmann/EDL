@@ -97,7 +97,7 @@ local function GameController(manager)
     end
 
     function drawIntro()
-        local introText = "PRESS 'SPACE' TO JUMP!"
+        local introText = Constants.TEXT_INTRO
         local introTextWidth = love.graphics.getFont():getWidth(introText)
 
         -- Sinusoidal movement to intro text.

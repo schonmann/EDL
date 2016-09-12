@@ -3,7 +3,16 @@ local Constants = require("../util/constants")
 local AbstractGameObject = require("../model/abstractgameobject")
 local Assets = require("util/assets")
 
--- Enemy Class -- 
+-- Enemy Class --
+
+--[[
+    Nome: Cadeia de caracteres '--'.
+    Propriedade: Significado.
+    Binding Time: Design.
+    Explicação: O significado de '--' como o início de
+    uma linha de comentários em um código Lua é definido 
+    em tempo de design da linguagem.
+]]
 
 local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     local self = AbstractGameObject(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
@@ -87,6 +96,18 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         self.jump()
     end
 
+    --[[
+        Nome: Parâmetro "deltaTime"
+        Propriedade: Valor.
+        Binding Time: Execução.
+        Explicação: Como o valor de "deltaTime"
+        é apenas definido na chamada do procedimento
+        "self.update", e representa exatamente o tempo 
+        desde a última atualização, seu valor é somente 
+        determinado em tempo de execução.
+    ]]
+
+
     function self.setScoreCallback(scoreCallback)
         self.scoreCallback = scoreCallback
     end
@@ -96,8 +117,17 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     end
 
     function self.turnRight()
-        self.ddx = 1000
+        self.ddx = 2000/2
     end
+
+    --[[
+        Nome: Expressão "2000/2".
+        Propriedade: Resultado/Valor.
+        Binding Time: Compilação.
+        Explicação: Visando otimização, todos
+        os cálculos de constantes são realizados
+        em tempo de compilação.
+    ]]
 
     function self.turnLeft()
         self.ddx = -1000

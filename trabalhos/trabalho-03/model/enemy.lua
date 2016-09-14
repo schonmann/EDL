@@ -16,6 +16,17 @@ local Assets = require("util/assets")
 
 local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     local self = AbstractGameObject(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
+    
+    --[[
+        Nome: Variável 'self'
+        Propriedade: Endereço.
+        Binding Time: Execução.
+        Explicação: O endereço de memória
+        onde guardaremos o valor de 'self'
+        é determinado apenas em tempo de 
+        execução, pois depende do gerenciamento
+        de memória pelo sistema operacional.
+    ]]
 
     local randomPower = 0
 
@@ -85,6 +96,16 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         end
     end
 
+    --[[
+        Nome: Função "function.self.updateOrientation(deltaTime)"
+        Propriedade: Validade da sintaxe.
+        Binding Time: Compilação.
+        Explicação: A sintaxe correta de bloco
+        de função é verificada durante o processo de
+        compilação, de acordo com especificação
+        da linguagem Lua.
+    ]]
+
     function self.update(deltaTime)
         self.updateMotionX(deltaTime)
         self.updateMotionY(deltaTime)
@@ -101,12 +122,11 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         Propriedade: Valor.
         Binding Time: Execução.
         Explicação: Como o valor de "deltaTime"
-        é apenas definido na chamada do procedimento
+        é uma variavel local definida na chamada do procedimento
         "self.update", e representa exatamente o tempo 
         desde a última atualização, seu valor é somente 
         determinado em tempo de execução.
     ]]
-
 
     function self.setScoreCallback(scoreCallback)
         self.scoreCallback = scoreCallback
@@ -141,6 +161,14 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         if not self.isGrounded() then return end
         self.dy = Constants.PLAYER_JUMP_VELOCITY * randomPower
     end
+    
+    --[[
+        Nome: Bloco 'if'.
+        Propriedade: Sintaxe.
+        Binding Time: Design.
+        Explicação: A sintaxe correta de bloco
+        'if' é definida no design da linguagem.
+    ]]
 
     function self.handleInput(deltaTime)
     end

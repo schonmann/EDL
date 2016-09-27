@@ -25,7 +25,7 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         onde guardaremos o valor de 'self'
         é determinado apenas em tempo de 
         execução, pois depende do gerenciamento
-        de memória pelo sistema operacional.
+        na pilha.
     ]]
 
     local randomPower = 0
@@ -97,10 +97,10 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     end
 
     --[[
-        Nome: Função "function.self.updateOrientation(deltaTime)"
+        Nome: function() (...) end
         Propriedade: Validade da sintaxe.
         Binding Time: Compilação.
-        Explicação: A sintaxe correta de bloco
+        Explicação: A sintaxe correta do bloco
         de função é verificada durante o processo de
         compilação, de acordo com especificação
         da linguagem Lua.

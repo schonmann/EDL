@@ -30,28 +30,39 @@ local function GameController(manager)
         table.insert(self.objects, background)
     end
 
-    -- Método de callback chamado quando uma entidade inimigo "morre".
+    -- Coleção: Instâncias de inimigo.
+    -- Escopo: Variável local "enemies".
+    -- Tempo de vida: No início do jogo temos três instâncias na 
+    -- coleção, posicionadas na extremidade direita da tela;
+    -- toda vez que um inimigo atinge o limite esquerdo da tela, 
+    -- retiramos a instância correspondente do array, para que, mais tarde,
+    -- o Garbage Collector colete a memória fora de uso.
+
+    -- Método de callback chamado quando uma entidade inimigo "morre" (score).
 
     function onPlayerScore(scoredEnemy)
         score = score + 1
 
+        -- Desalocação. Limpa as refências nas tabelas de controle que 
+        -- representam às entidades de 'inimigo' a serem destruídas.
+
         cleanupEnemy(scoredEnemy)
+        
+        -- Alocação. Cria nova instância de inimigo e insere nas tabelas
+        -- de controle.
+
         setupEnemy(createEnemy())
     end
 
     function cleanupEnemy(enemy)
-
-        -- Desalocação. Limpa as refências nas tabelas de controle que 
-        -- representam às entidades de 'inimigo' a serem destruídas.
-
         for i,v in pairs(self.objects) do
-            if(v.objs_index == enemy.objs_index) then
+            if v == enemy then
                 table.remove(self.objects, i)
             end
         end
         for i,v in pairs(enemies) do
-            if(v.enms_index == enemy.enms_index) then
-                table.remove(enemies, enemy.enms_index)
+            if v == enemy then
+                table.remove(enemies, i)
             end
         end
     end
@@ -63,16 +74,11 @@ local function GameController(manager)
     end
 
     function setupEnemy(enemy)
-        -- Insere nas tabelas de controle.
-         enemy.objs_index = #self.objects+1
-        enemy.enms_index = #enemies+1
         table.insert(self.objects, enemy)
         table.insert(enemies, enemy)
     end
 
     function createEnemy()
-        -- Alocação. Cria nova entidade de inimigo.
-
         local enemy = Enemy()
         enemy.setScoreCallback(onPlayerScore)
         return enemy;

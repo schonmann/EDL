@@ -30,19 +30,52 @@ local function GameController(manager)
         table.insert(self.objects, background)
     end
 
-    function onPlayerScore()
+    -- Método de callback chamado quando uma entidade inimigo "morre".
+
+    function onPlayerScore(scoredEnemy)
         score = score + 1
-        print(score)
+
+        cleanupEnemy(scoredEnemy)
+        setupEnemy(createEnemy())
+    end
+
+    function cleanupEnemy(enemy)
+
+        -- Desalocação. Limpa as refências nas tabelas de controle que 
+        -- representam às entidades de 'inimigo' a serem destruídas.
+
+        for i,v in pairs(self.objects) do
+            if(v.objs_index == enemy.objs_index) then
+                table.remove(self.objects, i)
+            end
+        end
+        for i,v in pairs(enemies) do
+            if(v.enms_index == enemy.enms_index) then
+                table.remove(enemies, enemy.enms_index)
+            end
+        end
     end
 
     function setupEnemies()
-        for i = 1,3 do
-            enemy = Enemy()
-            enemy.setScoreCallback(onPlayerScore)
-
-            table.insert(self.objects, enemy)
-            table.insert(enemies, enemy)
+        for i = 1,3 do 
+            setupEnemy(createEnemy()) 
         end
+    end
+
+    function setupEnemy(enemy)
+        -- Insere nas tabelas de controle.
+         enemy.objs_index = #self.objects+1
+        enemy.enms_index = #enemies+1
+        table.insert(self.objects, enemy)
+        table.insert(enemies, enemy)
+    end
+
+    function createEnemy()
+        -- Alocação. Cria nova entidade de inimigo.
+
+        local enemy = Enemy()
+        enemy.setScoreCallback(onPlayerScore)
+        return enemy;
     end
 
     function setupPlayer()

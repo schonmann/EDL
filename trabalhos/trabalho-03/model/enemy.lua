@@ -16,6 +16,18 @@ local Assets = require("util/assets")
 
 local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     local self = AbstractGameObject(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
+    
+    --[[
+        Nome: Variável 'self'
+        Propriedade: Endereço.
+        Binding Time: Execução.
+        Explicação: O endereço de memória
+        onde guardaremos o valor de 'self'
+        é determinado apenas em tempo de 
+        execução, no momento em que a função
+        'Enemy' é chamada, e, por consequência, 
+        colocada na pilha.
+    ]]
 
     local randomPower = 0
 
@@ -64,6 +76,23 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         self.y = self.y +  self.dy * deltaTime
         self.y = Utils.clamp(self.y, self.h * self.sy/2, Constants.ENVIRONMENT_GROUND_Y)
     end
+    
+    --[[
+        Nome: Operador "+".
+        Propriedade: Semântica.
+        Binding Time: Compilação.
+        Explicação: Sob o contexto de linguagens
+                    estáticas, o comportamento de determinados
+                    operadores dependem dos tipos dos operandos.
+                    Logo, seu comportamento é avaliado em tempo 
+                    de compilação. 
+    
+                    No caso de linguagens dinâmicas como Lua e JavaScript, 
+                    a avaliação das operações é feita em tempo de execução, 
+                    o que pode levar a comportamentos inesperados se não 
+                    houver cuidado por parte do programador quanto à integridade
+                    dos operandos. 
+    ]]
 
     function self.updateMotionX(deltaTime)
         self.dx = self.dx + self.ddx * deltaTime
@@ -85,6 +114,16 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         end
     end
 
+    --[[
+        Nome: function() (...) end
+        Propriedade: Validade da sintaxe.
+        Binding Time: Compilação.
+        Explicação: A sintaxe correta do bloco
+        de função é verificada durante o processo de
+        compilação, de acordo com especificação
+        da linguagem Lua.
+    ]]
+
     function self.update(deltaTime)
         self.updateMotionX(deltaTime)
         self.updateMotionY(deltaTime)
@@ -101,12 +140,12 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         Propriedade: Valor.
         Binding Time: Execução.
         Explicação: Como o valor de "deltaTime"
-        é apenas definido na chamada do procedimento
+        é uma variavel local definida na chamada do procedimento
         "self.update", e representa exatamente o tempo 
         desde a última atualização, seu valor é somente 
-        determinado em tempo de execução.
+        determinado em tempo de execução (no momento em que é feita a 
+        passagem de parâmetro na chamada da função).
     ]]
-
 
     function self.setScoreCallback(scoreCallback)
         self.scoreCallback = scoreCallback
@@ -141,6 +180,14 @@ local function Enemy(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         if not self.isGrounded() then return end
         self.dy = Constants.PLAYER_JUMP_VELOCITY * randomPower
     end
+    
+    --[[
+        Nome: Bloco 'if'.
+        Propriedade: Sintaxe.
+        Binding Time: Design.
+        Explicação: A sintaxe correta do bloco
+        'if' é definida no design da linguagem.
+    ]]
 
     function self.handleInput(deltaTime)
     end

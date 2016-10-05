@@ -30,26 +30,19 @@ local function GameController(manager)
         table.insert(self.objects, background)
     end
 
-    -- Coleção: Instâncias de inimigo.
-    -- Escopo: Variável local "enemies".
-    -- Tempo de vida: No início do jogo temos três instâncias na 
-    -- coleção, posicionadas na extremidade direita da tela;
-    -- toda vez que um inimigo atinge o limite esquerdo da tela, 
-    -- retiramos a instância correspondente do array, para que, mais tarde,
-    -- o Garbage Collector colete a memória fora de uso.
-
-    -- Método de callback chamado quando uma entidade inimigo "morre" (score).
+    -- Coleção: Instâncias de inimigo (variável enemies).
+    -- Escopo: local.
+    -- Tempo de vida: No início do jogo, iniciamos a coleção alocando três instâncias de inimigo
+    -- posicionadas na extremidade direita da tela. toda vez que um inimigo atinge o lado esquerdo, 
+    -- retiramos a instância correspondente do array, para que, mais tarde, o Garbage Collector colete 
+    -- a memória fora de uso (Desalocação), encerrando o ciclo de vida do objeto. Ao mesmo tempo, alocamos 
+    -- outra instância do objeto de inimigo, adicionando-a na coleção. Deste modo, sempre teremos três 
+    -- objetos na coleção até o fim de seu ciclo de vida (game over), onde sua memória é desalocada.
 
     function onPlayerScore(scoredEnemy)
         score = score + 1
 
-        -- Desalocação. Limpa as refências nas tabelas de controle que 
-        -- representam às entidades de 'inimigo' a serem destruídas.
-
         cleanupEnemy(scoredEnemy)
-        
-        -- Alocação. Cria nova instância de inimigo e insere nas tabelas
-        -- de controle.
 
         setupEnemy(createEnemy())
     end

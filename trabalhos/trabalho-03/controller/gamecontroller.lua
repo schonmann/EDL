@@ -11,8 +11,7 @@ local function GameController(manager)
 
     local player = nil
     local enemies = {}
-    local score = 0
-    local hiscore = 0
+    local status = {};
 
     local gameOver = false
     local gameOverTime = 0
@@ -22,11 +21,26 @@ local function GameController(manager)
         self.objects = {}
         player = nil
         enemies = {}
-        score = 0
+
+        --  ** TRABALHO 06 **
+        --
+        --  Variável: status
+        --  Tipo: Dicionário de dados.
+        --  Descrição: Armazenamento por chave/valor. Consulta e CRUD em tempo constante.
+
+        status["score"] = 0;
+        status["hiscore"] = 0;
     end
 
     function setupBackground()
         local background = Background()
+
+        --  ** TRABALHO 06 **
+        --
+        --  Variável: self.objects
+        --  Tipo: Array.
+        --  Descrição: Guarda os objetos que fazem parte da lógica do jogo. Dados indexados como um array.
+
         table.insert(self.objects, background)
     end
 
@@ -41,7 +55,7 @@ local function GameController(manager)
     -- Método de callback chamado quando uma entidade inimigo "morre" (score).
 
     function onPlayerScore(scoredEnemy)
-        score = score + 1
+        status["score"] = status["score"] + 1
 
         -- Desalocação. Limpa as refências nas tabelas de controle que 
         -- representam às entidades de 'inimigo' a serem destruídas.
@@ -124,8 +138,8 @@ local function GameController(manager)
         if self.checkForCollisions() then -- game over!
             gameOver = true
             gameOverTime = love.timer.getTime()
-            if score > hiscore then
-                hiscore = score
+            if status["score"] > status["hiscore"] then
+                status["hiscore"] = status["score"]
             end
         end
     end
@@ -136,11 +150,11 @@ local function GameController(manager)
         end
 
         if gameOver then
-            DrawManager.drawGameOver(score,hiscore)
+            DrawManager.drawGameOver(status["score"],status["hiscore"])
         elseif not player.isPlaying() then
             DrawManager.drawIntro()
         else
-            DrawManager.drawHUD(score,hiscore)
+            DrawManager.drawHUD(status["score"],status["hiscore"])
         end
     end
 

@@ -2,6 +2,7 @@ local Utils = require("../util/utils")
 local Constants = require("../util/constants")
 local AbstractGameObject = require("../model/abstractgameobject")
 local Assets = require("util/assets")
+local ControlsEnum = require("enum/controlsenum")
 
 -- Player Class -- 
 
@@ -9,6 +10,13 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
     local self = AbstractGameObject(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
 
     function self.init()
+
+        --  ** TRABALHO 06 **
+        --
+        --  Variável: 'self'.
+        --  Tipo: Registro.
+        --  Descrição: Elementos identificados por campo, acesso estático.
+
         self.image = love.graphics.newImage(Assets.PATH_IMG_PLAYER)
         self.w = Constants.PLAYER_WIDTH
         self.h = Constants.PLAYER_HEIGHT
@@ -121,13 +129,19 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
 
     function self.handleInput(deltaTime)
 
-        if love.keyboard.isDown("left") then self.turnLeft()
-        elseif love.keyboard.isDown("right") then self.turnRight()
+        --  ** TRABALHO 06 **
+        --
+        --  Variável: ControlsEnum
+        --  Tipo: Enum.
+        --  Descrição: Enum para centralizar controles do jogo, diminuindo o acoplamento e melhorando a leitura do código.
+
+        if love.keyboard.isDown(ControlsEnum.MOVE_LEFT) then self.turnLeft()
+        elseif love.keyboard.isDown(ControlsEnum.MOVE_RIGHT) then self.turnRight()
         else self.stop()
         end
 
         function love.keypressed(key)
-            if key == "space" then
+            if key == ControlsEnum.JUMP then
                 spaceDownDt = love.timer.getTime()
                 if not self.playing then
                     self.playing = true
@@ -136,7 +150,7 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         end
 
         function love.keyreleased(key)
-            if key == "space" then
+            if key == ControlsEnum.JUMP then
                 spaceUpDt = love.timer.getTime()
                 if spaceDownDt ~= -1 then
                     self.jump(spaceUpDt - spaceDownDt)

@@ -64,33 +64,98 @@ function self.drawHUD(score,hiscore)
         Constants.TEXT_SCALE_HISCORE, 0, textHiscoreHeight/2)
 end
 
+-- *** Trabalho 07 *** --
+
+-- A cada vez que esta função for chamada criaremos uma nova closure,
+-- representando uma nova instancia do objeto de "Titulo".
+
+local Title = function ()
+    local self = {}
+    self.text = Constants.TEXT_TITLE
+    self.x = Constants.VIEWPORT_WIDTH/2
+    self.y = Constants.VIEWPORT_HEIGHT/4
+    self.w = love.graphics.getFont():getWidth(self.text)
+    self.h = love.graphics.getFont():getHeight(self.text)
+    return self
+end
+
+local Intro = function ()
+    local self = {}
+    self.text = Constants.TEXT_INTRO
+    self.x = Constants.VIEWPORT_WIDTH/2 - 40
+    self.y = Constants.VIEWPORT_HEIGHT/2
+    self.w = love.graphics.getFont():getWidth(self.text)
+    self.h = love.graphics.getFont():getHeight(self.text)
+    return self
+end
+
+-- Criamos duas closures.
+
+local title = Title()
+local intro = Intro()
+
+-- Logica da movimentação retangular utilizada pela corotina.
+
+function titleMotion(title)
+    local r = 5*Constants.VIEWPORT_WIDTH/8
+    local l = 3*Constants.VIEWPORT_WIDTH/8
+    local u = 2*Constants.VIEWPORT_HEIGHT/8
+    local d = 3*Constants.VIEWPORT_HEIGHT/8
+
+    while true do
+        if (title.x >= l and title.x <= r) then
+            if title.y <= u then
+                title.x = title.x + 1
+                coroutine.yield()
+            else
+                title.x = title.x - 1
+                coroutine.yield()
+            end
+        else
+            if(title.x >= r) then
+                if(title.y <= d) then
+                    title.y = title.y + 1
+                    coroutine.yield()
+                else
+                    title.x = title.x - 1
+                    coroutine.yield()
+                end
+            else
+                if(title.y >= u) then
+                    title.y = title.y - 1
+                    coroutine.yield()
+                else
+                    title.x = title.x + 1
+                    coroutine.yield()
+                end
+            end
+        end
+    end
+end
+
+-- Cria a corotina c, dada pela função titleMotion.
+local c = coroutine.create(titleMotion)
+
 function self.drawIntro()
-    local textTitle = Constants.TEXT_TITLE
-    local textIntro = Constants.TEXT_INTRO
-
-    local textTitleWidth = love.graphics.getFont():getWidth(textTitle)
-    local textTitleHeight = love.graphics.getFont():getHeight(textTitle)
-    local textIntroWidth = love.graphics.getFont():getWidth(textIntro)
-    local textIntroHeight = love.graphics.getFont():getHeight(textIntro)
-
+    
     local fsin = 1.0 + math.sin(love.timer.getTime() * 8)/20
     local fcos = 2 * math.cos(love.timer.getTime() * 10)
 
-    -- Cosinuidal
+    -- Inicia a corotina, executando-a até uma 
+    -- chamada yield ou seu término.
+    coroutine.resume(c,title)
 
-    love.graphics.print(textTitle,
-        Constants.VIEWPORT_WIDTH/2,
-        Constants.VIEWPORT_HEIGHT/4 + fcos, 0, 
-        Constants.TEXT_SCALE_TITLE, 
-        Constants.TEXT_SCALE_TITLE, textTitleWidth/2, textTitleHeight/2)
+    love.graphics.print(title.text,
+        title.x,
+        title.y + fcos, 0, 
+        Constants.TEXT_SCALE_TITLE,
+        Constants.TEXT_SCALE_TITLE, title.w/2, title.h/2)
 
-    -- Sinusoidal movement to intro text.
-
-    love.graphics.print(textIntro, 
-        Constants.VIEWPORT_WIDTH/2,
-        Constants.VIEWPORT_HEIGHT/2, 0, 
+    love.graphics.print(intro.text, 
+        intro.x,
+        intro.y, 0, 
         Constants.TEXT_SCALE_INTRO*(fsin), 
-        Constants.TEXT_SCALE_INTRO*(fsin), textIntroWidth/2, textIntroHeight/2)
+        Constants.TEXT_SCALE_INTRO*(fsin), intro.w/2, intro.h/2)
 end
 
 return self

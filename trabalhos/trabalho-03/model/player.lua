@@ -135,8 +135,8 @@ local function Player(o,image,x,y,w,h,fx,fy,dx,dy,ddx,ddy,maxdx,maxdy,sx,sy)
         --  Tipo: Enum.
         --  Descrição: Enum para centralizar controles do jogo, diminuindo o acoplamento e melhorando a leitura do código.
 
-        if love.keyboard.isDown(ControlsEnum.MOVE_LEFT) then self.turnLeft()
-        elseif love.keyboard.isDown(ControlsEnum.MOVE_RIGHT) then self.turnRight()
+        if love.keyboard.isDown(ControlsEnum.WALK_LEFT) then self.turnLeft()
+        elseif love.keyboard.isDown(ControlsEnum.WALK_RIGHT) then self.turnRight()
         else self.stop()
         end
 

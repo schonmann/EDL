@@ -8,4 +8,4 @@ local function ControlsEnum()
     return self
 end
 
-return ControlsEnum
+return ControlsEnum()

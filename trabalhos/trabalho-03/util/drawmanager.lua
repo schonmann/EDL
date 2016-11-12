@@ -74,6 +74,8 @@ local Title = function ()
     self.text = Constants.TEXT_TITLE
     self.x = Constants.VIEWPORT_WIDTH/2
     self.y = Constants.VIEWPORT_HEIGHT/4
+    self.dx = 1000
+    self.dy = 1000
     self.w = love.graphics.getFont():getWidth(self.text)
     self.h = love.graphics.getFont():getHeight(self.text)
     return self
@@ -84,6 +86,8 @@ local Intro = function ()
     self.text = Constants.TEXT_INTRO
     self.x = Constants.VIEWPORT_WIDTH/2 - 40
     self.y = Constants.VIEWPORT_HEIGHT/2
+    self.dx = 200
+    self.dy = 200
     self.w = love.graphics.getFont():getWidth(self.text)
     self.h = love.graphics.getFont():getHeight(self.text)
     return self
@@ -96,45 +100,46 @@ local intro = Intro()
 
 -- Logica da movimentação retangular utilizada pela corotina.
 
-function titleMotion(title)
+function titleMotion(title, dt)
     local r = 5*Constants.VIEWPORT_WIDTH/8
     local l = 3*Constants.VIEWPORT_WIDTH/8
     local u = 2*Constants.VIEWPORT_HEIGHT/8
     local d = 3*Constants.VIEWPORT_HEIGHT/8
 
     while true do
-        if (title.x >= l and title.x <= r) then
-            if title.y <= u then
-                title.x = title.x + 1
-                coroutine.yield()
-            else
-                title.x = title.x - 1
-                coroutine.yield()
-            end
-        else
-            if(title.x >= r) then
-                if(title.y <= d) then
-                    title.y = title.y + 1
-                    coroutine.yield()
-                else
-                    title.x = title.x - 1
-                    coroutine.yield()
-                end
-            else
-                if(title.y >= u) then
-                    title.y = title.y - 1
-                    coroutine.yield()
-                else
-                    title.x = title.x + 1
-                    coroutine.yield()
-                end
-            end
+        -- Anda pra direita
+        while title.x < r do
+			title.x = title.x + dt*title.dx
+			coroutine.yield()
+		end
+
+        -- Anda pra baixo
+		while title.y <= d do
+            title.y = title.y + dt*title.dy
+            coroutine.yield()
+        end
+
+        --Anda pra esquerda
+        while title.x >= l do
+            title.x = title.x - dt*title.dx
+            coroutine.yield()
+        end
+
+        -- Anda pra cima
+        while title.y >= u do
+            title.y = title.y - dt*title.dy
+            coroutine.yield()
         end
     end
 end
 
 -- Cria a corotina c, dada pela função titleMotion.
 local c = coroutine.create(titleMotion)
+
+-- Dispara a corotina.
+function self.update(dt)
+    coroutine.resume(c,title, dt)
+end
 
 function self.drawIntro()
     
@@ -143,7 +148,6 @@ function self.drawIntro()
 
     -- Inicia a corotina, executando-a até uma 
     -- chamada yield ou seu término.
-    coroutine.resume(c,title)
 
     love.graphics.print(title.text,
         title.x,

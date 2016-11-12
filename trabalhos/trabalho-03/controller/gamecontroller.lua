@@ -115,7 +115,10 @@ local function GameController(manager)
     self.init()
     
     function self.update(dt)
-        if not player.isPlaying() then return end
+        if not player.isPlaying() then
+            DrawManager.update(dt)
+            return
+        end
 
         if gameOver then
             if love.timer.getTime() - gameOverTime > 2 then

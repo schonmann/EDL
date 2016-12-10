@@ -78,4 +78,20 @@ p3 = Seq (Attr "x"   (Num 10)) --If/Equality test.
             (Attr "ret" (Num 1))
             (Attr "ret" (Num 0)))
 
-main = text (toString (lang p2))
+fibonacci : Prog
+fibonacci = Seq 
+        (Seq (Attr "f0" (Num 0))
+             (Seq (Attr "f1" (Num 1))
+                 (Define "n" (Num 5)) ) )
+        (Seq
+            (Seq (Attr "f2" (Num 0))
+                (Seq (Attr "cont" (Num 2)) -- f2
+                    (While (Lt (Var "cont") (Const "n"))
+                            (Seq (Attr "f2" (Add (Var "f0") (Var "f1")) )
+                                (Seq (Attr "f0" (Var "f1"))
+                                        (Seq (Attr "f1" (Var "f2")) 
+                                            (Attr "cont" (Add (Var "cont") (Num 1)))))))))
+            (Attr "ret" (Var "f2")))
+     
+
+main = text (toString (lang p4))

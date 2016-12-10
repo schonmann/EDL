@@ -1,0 +1,314 @@
+var _user$project$Main$zero = function (ask) {
+	return 0;
+};
+var _user$project$Main$evalExp = F2(
+	function (exp, env) {
+		var _p0 = exp;
+		switch (_p0.ctor) {
+			case 'Add':
+				return A2(_user$project$Main$evalExp, _p0._0, env) + A2(_user$project$Main$evalExp, _p0._1, env);
+			case 'Sub':
+				return A2(_user$project$Main$evalExp, _p0._0, env) - A2(_user$project$Main$evalExp, _p0._1, env);
+			case 'Mult':
+				return A2(_user$project$Main$evalExp, _p0._0, env) * A2(_user$project$Main$evalExp, _p0._1, env);
+			case 'Div':
+				return (A2(_user$project$Main$evalExp, _p0._0, env) / A2(_user$project$Main$evalExp, _p0._1, env)) | 0;
+			case 'Mod':
+				return A2(
+					_elm_lang$core$Basics_ops['%'],
+					A2(_user$project$Main$evalExp, _p0._0, env),
+					A2(_user$project$Main$evalExp, _p0._1, env));
+			case 'Not':
+				return _elm_lang$core$Native_Utils.eq(
+					A2(_user$project$Main$evalExp, _p0._0, env),
+					0) ? 1 : 0;
+			case 'And':
+				return ((!_elm_lang$core$Native_Utils.eq(
+					A2(_user$project$Main$evalExp, _p0._0, env),
+					0)) && (!_elm_lang$core$Native_Utils.eq(
+					A2(_user$project$Main$evalExp, _p0._1, env),
+					0))) ? 1 : 0;
+			case 'Or':
+				return ((!_elm_lang$core$Native_Utils.eq(
+					A2(_user$project$Main$evalExp, _p0._0, env),
+					0)) || (!_elm_lang$core$Native_Utils.eq(
+					A2(_user$project$Main$evalExp, _p0._1, env),
+					0))) ? 1 : 0;
+			case 'Xor':
+				return A2(
+					_elm_lang$core$Basics$xor,
+					!_elm_lang$core$Native_Utils.eq(
+						A2(_user$project$Main$evalExp, _p0._0, env),
+						0),
+					!_elm_lang$core$Native_Utils.eq(
+						A2(_user$project$Main$evalExp, _p0._1, env),
+						0)) ? 1 : 0;
+			case 'Gt':
+				return (_elm_lang$core$Native_Utils.cmp(
+					A2(_user$project$Main$evalExp, _p0._0, env),
+					A2(_user$project$Main$evalExp, _p0._1, env)) > 0) ? 1 : 0;
+			case 'Lt':
+				return (_elm_lang$core$Native_Utils.cmp(
+					A2(_user$project$Main$evalExp, _p0._0, env),
+					A2(_user$project$Main$evalExp, _p0._1, env)) < 0) ? 1 : 0;
+			case 'Eql':
+				return _elm_lang$core$Native_Utils.eq(
+					A2(_user$project$Main$evalExp, _p0._0, env),
+					A2(_user$project$Main$evalExp, _p0._1, env)) ? 1 : 0;
+			case 'Num':
+				return _p0._0;
+			case 'Var':
+				return env(_p0._0);
+			default:
+				return env(_p0._0);
+		}
+	});
+var _user$project$Main$Eql = F2(
+	function (a, b) {
+		return {ctor: 'Eql', _0: a, _1: b};
+	});
+var _user$project$Main$Lt = F2(
+	function (a, b) {
+		return {ctor: 'Lt', _0: a, _1: b};
+	});
+var _user$project$Main$Gt = F2(
+	function (a, b) {
+		return {ctor: 'Gt', _0: a, _1: b};
+	});
+var _user$project$Main$Xor = F2(
+	function (a, b) {
+		return {ctor: 'Xor', _0: a, _1: b};
+	});
+var _user$project$Main$Or = F2(
+	function (a, b) {
+		return {ctor: 'Or', _0: a, _1: b};
+	});
+var _user$project$Main$And = F2(
+	function (a, b) {
+		return {ctor: 'And', _0: a, _1: b};
+	});
+var _user$project$Main$Not = function (a) {
+	return {ctor: 'Not', _0: a};
+};
+var _user$project$Main$Const = function (a) {
+	return {ctor: 'Const', _0: a};
+};
+var _user$project$Main$Var = function (a) {
+	return {ctor: 'Var', _0: a};
+};
+var _user$project$Main$Num = function (a) {
+	return {ctor: 'Num', _0: a};
+};
+var _user$project$Main$Mod = F2(
+	function (a, b) {
+		return {ctor: 'Mod', _0: a, _1: b};
+	});
+var _user$project$Main$Div = F2(
+	function (a, b) {
+		return {ctor: 'Div', _0: a, _1: b};
+	});
+var _user$project$Main$Mult = F2(
+	function (a, b) {
+		return {ctor: 'Mult', _0: a, _1: b};
+	});
+var _user$project$Main$Sub = F2(
+	function (a, b) {
+		return {ctor: 'Sub', _0: a, _1: b};
+	});
+var _user$project$Main$Add = F2(
+	function (a, b) {
+		return {ctor: 'Add', _0: a, _1: b};
+	});
+var _user$project$Main$Define = F2(
+	function (a, b) {
+		return {ctor: 'Define', _0: a, _1: b};
+	});
+var _user$project$Main$While = F2(
+	function (a, b) {
+		return {ctor: 'While', _0: a, _1: b};
+	});
+var _user$project$Main$If = F3(
+	function (a, b, c) {
+		return {ctor: 'If', _0: a, _1: b, _2: c};
+	});
+var _user$project$Main$Seq = F2(
+	function (a, b) {
+		return {ctor: 'Seq', _0: a, _1: b};
+	});
+var _user$project$Main$evalProg = F2(
+	function (s, env) {
+		evalProg:
+		while (true) {
+			var _p1 = s;
+			switch (_p1.ctor) {
+				case 'Seq':
+					var _v2 = _p1._1,
+						_v3 = A2(_user$project$Main$evalProg, _p1._0, env);
+					s = _v2;
+					env = _v3;
+					continue evalProg;
+				case 'Attr':
+					var val = A2(_user$project$Main$evalExp, _p1._1, env);
+					return function (ask) {
+						return _elm_lang$core$Native_Utils.eq(ask, _p1._0) ? val : env(ask);
+					};
+				case 'If':
+					if (!_elm_lang$core$Native_Utils.eq(
+						A2(_user$project$Main$evalExp, _p1._0, env),
+						0)) {
+						var _v4 = _p1._1,
+							_v5 = env;
+						s = _v4;
+						env = _v5;
+						continue evalProg;
+					} else {
+						var _v6 = _p1._2,
+							_v7 = env;
+						s = _v6;
+						env = _v7;
+						continue evalProg;
+					}
+				case 'While':
+					if (_elm_lang$core$Native_Utils.eq(
+						A2(_user$project$Main$evalExp, _p1._0, env),
+						0)) {
+						return env;
+					} else {
+						var _v8 = A2(_user$project$Main$Seq, _p1._1, s),
+							_v9 = env;
+						s = _v8;
+						env = _v9;
+						continue evalProg;
+					}
+				default:
+					var _p2 = _p1._0;
+					var val = A2(_user$project$Main$evalExp, _p1._1, env);
+					return (!_elm_lang$core$Native_Utils.eq(
+						env(_p2),
+						0)) ? env : function (ask) {
+						return _elm_lang$core$Native_Utils.eq(ask, _p2) ? val : env(ask);
+					};
+			}
+		}
+	});
+var _user$project$Main$lang = function (p) {
+	return A3(_user$project$Main$evalProg, p, _user$project$Main$zero, 'ret');
+};
+var _user$project$Main$Attr = F2(
+	function (a, b) {
+		return {ctor: 'Attr', _0: a, _1: b};
+	});
+var _user$project$Main$p1 = A2(
+	_user$project$Main$Attr,
+	'ret',
+	A2(
+		_user$project$Main$Add,
+		_user$project$Main$Num(11),
+		_user$project$Main$Num(9)));
+var _user$project$Main$p2 = A2(
+	_user$project$Main$Seq,
+	A2(
+		_user$project$Main$Attr,
+		'x',
+		_user$project$Main$Num(11)),
+	A2(
+		_user$project$Main$Attr,
+		'ret',
+		A2(
+			_user$project$Main$Add,
+			_user$project$Main$Var('x'),
+			_user$project$Main$Num(9))));
+var _user$project$Main$p3 = A2(
+	_user$project$Main$Seq,
+	A2(
+		_user$project$Main$Attr,
+		'x',
+		_user$project$Main$Num(10)),
+	A3(
+		_user$project$Main$If,
+		A2(
+			_user$project$Main$Eql,
+			_user$project$Main$Var('b'),
+			_user$project$Main$Num(0)),
+		A2(
+			_user$project$Main$Attr,
+			'ret',
+			_user$project$Main$Num(1)),
+		A2(
+			_user$project$Main$Attr,
+			'ret',
+			_user$project$Main$Num(0))));
+var _user$project$Main$p4 = A2(
+	_user$project$Main$Seq,
+	A2(
+		_user$project$Main$Seq,
+		A2(
+			_user$project$Main$Attr,
+			'f0',
+			_user$project$Main$Num(0)),
+		A2(
+			_user$project$Main$Seq,
+			A2(
+				_user$project$Main$Attr,
+				'f1',
+				_user$project$Main$Num(1)),
+			A2(
+				_user$project$Main$Define,
+				'n',
+				_user$project$Main$Num(5)))),
+	A2(
+		_user$project$Main$Seq,
+		A2(
+			_user$project$Main$Seq,
+			A2(
+				_user$project$Main$Attr,
+				'f2',
+				_user$project$Main$Num(0)),
+			A2(
+				_user$project$Main$Seq,
+				A2(
+					_user$project$Main$Attr,
+					'cont',
+					_user$project$Main$Num(2)),
+				A2(
+					_user$project$Main$While,
+					A2(
+						_user$project$Main$Lt,
+						_user$project$Main$Var('cont'),
+						_user$project$Main$Const('n')),
+					A2(
+						_user$project$Main$Seq,
+						A2(
+							_user$project$Main$Attr,
+							'f2',
+							A2(
+								_user$project$Main$Add,
+								_user$project$Main$Var('f0'),
+								_user$project$Main$Var('f1'))),
+						A2(
+							_user$project$Main$Seq,
+							A2(
+								_user$project$Main$Attr,
+								'f0',
+								_user$project$Main$Var('f1')),
+							A2(
+								_user$project$Main$Seq,
+								A2(
+									_user$project$Main$Attr,
+									'f1',
+									_user$project$Main$Var('f2')),
+								A2(
+									_user$project$Main$Attr,
+									'cont',
+									A2(
+										_user$project$Main$Add,
+										_user$project$Main$Var('cont'),
+										_user$project$Main$Num(1))))))))),
+		A2(
+			_user$project$Main$Attr,
+			'ret',
+			_user$project$Main$Var('f2'))));
+var _user$project$Main$main = _elm_lang$virtual_dom$Native_VirtualDom.staticProgram(
+	_elm_lang$html$Html$text(
+		_elm_lang$core$Basics$toString(
+			_user$project$Main$lang(_user$project$Main$p4))));

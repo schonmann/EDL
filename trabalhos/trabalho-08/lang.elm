@@ -94,4 +94,4 @@ fibonacci = Seq
             (Attr "ret" (Var "f2")))
      
 
-main = text (toString (lang p4))
+main = text (toString (lang fibonacci))

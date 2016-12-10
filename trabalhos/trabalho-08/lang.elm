@@ -3,13 +3,14 @@ import Html exposing (text)
 type alias Env = (String -> Int)
 
 type Exp = Add Exp Exp | Sub Exp Exp | Mult Exp Exp | Div Exp Exp | Mod Exp Exp |
-           Num Int | Var String | -- Const String |
+           Num Int | Var String | Const String |
            Not Exp | And Exp Exp | Or Exp Exp | Xor Exp Exp | Gt Exp Exp | Lt Exp Exp | Eql Exp Exp
 
 type Prog = Attr String Exp
           | Seq Prog Prog
           | If Exp Prog Prog
           | While Exp Prog
+          | Define String Exp
 
 
 evalExp : Exp -> Env -> Int
@@ -38,7 +39,7 @@ evalExp exp env =
 
         Num v       -> v
         Var var     -> (env var)
-        -- Const String ...
+        Const const -> (env const)
 
 evalProg : Prog -> Env -> Env
 evalProg s env =
@@ -52,6 +53,10 @@ evalProg s env =
                             else (evalProg b env)
         While cond a    -> if (evalExp cond env == 0) then env --Break.
                            else (evalProg (Seq a s) env)
+        Define const exp ->
+            let val = (evalExp exp env) -- If not defined, define.
+            in if (env const) /= 0 then env -- Already defined, can't overwrite constant. 
+               else \ask -> if ask == const then val else (env ask)
 
 zero : Env
 zero = \ask -> 0
@@ -69,8 +74,8 @@ p2 = Seq
 
 p3 : Prog
 p3 = Seq (Attr "x"   (Num 10)) --If/Equality test.
-        (If (Eql (Num 100) (Num 100))
+        (If (Eql (Var "b") (Num 0))
             (Attr "ret" (Num 1))
             (Attr "ret" (Num 0)))
 
-main = text (toString (lang p3))
+main = text (toString (lang p2))
